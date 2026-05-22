@@ -1,0 +1,19 @@
+name: "Hell is a Penthouse in Toronto"
+
+# The Narrator bot carries Luca, Callum, Lilith, Umbri, and all minor characters.
+# Adrian, Kethros, and Sebastian have standalone bots that can be added to the chat.
+# The stage manages all character routing internally — who speaks, when, and how.
+#
+# To run the full experience:
+#   Primary: skelequinn/hell-is-a-penthouse-in-toronto-df02b7935196 (Narrator)
+#   Optional additions:
+#     skelequinn/adrian-vorne-60a2ed51a532
+#     skelequinn/kethros-bcd90d4b6a0b
+#     skelequinn/sebastian-devereux-3a6961b89aaa
+
+characters:
+  - 'characters/skelequinn/hell-is-a-penthouse-in-toronto-df02b7935196'
+
+# The stage overrides all scenario text with its own injected context.
+# This field is intentionally left empty.
+scenario: ""
