@@ -924,7 +924,7 @@ export function ChatView({
                     Right edge tracks the right panel: fixed 200px on tablet, 25% on desktop. */}
                 <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: isTablet ? 200 : '25%', overflow: 'hidden', zIndex: 0 }}>
                     <img
-                        src={LOCATIONS[save.presence.currentLocationId ?? 'formal-receiving']?.mapImageUrl ?? 'https://i.imgur.com/XU227fD.jpeg'}
+                        src={LOCATIONS[save.presence.currentLocationId]?.mapImageUrl ?? 'https://i.imgur.com/XU227fD.jpeg'}
                         alt=""
                         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                     />
@@ -1189,4 +1189,31 @@ export function ChatView({
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
                                     <button
                                         onClick={() => { setConfirmNewGame(false); onNewGame?.(); }}
-                                        style={{ background: 'rgba(102,0,34,0.4)', border: '1px solid #FF3355', color: '#FF3355', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '7px 0', cursor: 'pointer', fontFamily: "'Georgia', serif", borderRadius
+                                        style={{ background: 'rgba(102,0,34,0.4)', border: '1px solid #FF3355', color: '#FF3355', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '7px 0', cursor: 'pointer', fontFamily: "'Georgia', serif", borderRadius: 2 }}
+                                    >
+                                        Yes
+                                    </button>
+                                    <button
+                                        onClick={() => setConfirmNewGame(false)}
+                                        style={{ background: 'transparent', border: '1px solid #1E2455', color: COLORS.textMuted, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '7px 0', cursor: 'pointer', fontFamily: "'Georgia', serif", borderRadius: 2 }}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+            {/* MAP OVERLAY */}
+            {mapOpen && mapPresence && (
+                <MapView
+                    save={save}
+                    mapPresence={mapPresence}
+                    onRoomSelect={handleMapNavigate}
+                    onClose={() => { setMapOpen(false); setMapPresence(null); }}
+                />
+            )}
+        </div>
+    );
+}

@@ -1,4 +1,4 @@
-import { CSSProperties, useState } from 'react';
+import { useState } from 'react';
 import { COLORS } from '../data/theme';
 import { useWindowSize, BP } from '../hooks/useWindowSize';
 
@@ -42,7 +42,7 @@ const SLIDE2_PARAGRAPHS: Array<{ text: string; isDialogue?: boolean }[]> = [
 
 // --- Shared styles ---
 
-const PANEL_STYLE: CSSProperties = {
+const PANEL_STYLE = {
     position: 'absolute',
     background: 'rgba(10, 13, 35, 0.80)',
     border: '1px solid rgba(30, 36, 85, 0.75)',
@@ -52,14 +52,14 @@ const PANEL_STYLE: CSSProperties = {
     overflow: 'hidden',
 };
 
-const WORDMARK_STYLE: CSSProperties = {
+const WORDMARK_STYLE = {
     position: 'absolute',
     top: 18,
     left: 22,
     fontFamily: 'Arial, sans-serif',
     fontSize: 13,
     letterSpacing: '0.26em',
-    textTransform: 'uppercase',
+    textTransform: 'uppercase' as const,
     color: COLORS.accent,
     zIndex: 20,
     opacity: 1,
@@ -282,4 +282,13 @@ function PanelFooter({ onAdvance }: { onAdvance: () => void }) {
                     (e.currentTarget as HTMLButtonElement).style.color = COLORS.bgPrimary;
                 }}
                 onMouseLeave={e => {
-                    (e.currentTarget as HTMLButtonElement).styl
+                    (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+                    (e.currentTarget as HTMLButtonElement).style.color = COLORS.accent;
+                }}
+            >
+                <span aria-hidden>&#9829;</span>
+                <span aria-hidden style={{ fontSize: 17 }}>&#8250;</span>
+            </button>
+        </div>
+    );
+}

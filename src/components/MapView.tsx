@@ -715,4 +715,27 @@ flexDirection: 'column',
                 scrollbarWidth: 'thin',
                 scrollbarColor: '#1A1A45 transparent',
             }}>
-                <div style=
+                <div style={{
+                    padding: '14px 14px 8px',
+                    borderBottom: '1px solid #1A1A45',
+                    fontSize: 9,
+                    letterSpacing: '0.16em',
+                    textTransform: 'uppercase',
+                    color: '#303068',
+                }}>
+                    Residents
+                </div>
+
+                {sidebarChars.map(charId => (
+                    <SidebarCharRow
+                        key={charId}
+                        charId={charId}
+                        save={save}
+                        mapPresence={mapPresence}
+                        curLocId={curLocId}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
