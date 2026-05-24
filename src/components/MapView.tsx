@@ -43,11 +43,11 @@ const MAP_CHAR_COLORS: Record<CharacterId, string> = {
 
 /** Portrait image paths (same registry as ChatView). */
 const MAP_PORTRAITS: Partial<Record<CharacterId, string>> = {
-    adrian:    '/images/characters/adrian-portrait.png',
-    sebastian: '/images/characters/sebastian-portrait.PNG',
-    callum:    '/images/characters/Callum-portrait.PNG',
-    kethros:   '/images/characters/kethros-portraitHumanoidVariant.PNG',
-    lilith:    '/images/characters/lilith-portrait.PNG',
+    adrian:    'https://i.imgur.com/KLgULRK.png',
+    sebastian: 'https://i.imgur.com/VcVMDNQ.png',
+    callum:    'https://i.imgur.com/Akvy0Tw.jpeg',
+    kethros:   'https://i.imgur.com/ICC595Q.png',
+    lilith:    'https://i.imgur.com/6P3sPAv.png',
 };
 
 
@@ -715,27 +715,4 @@ flexDirection: 'column',
                 scrollbarWidth: 'thin',
                 scrollbarColor: '#1A1A45 transparent',
             }}>
-                <div style={{
-                    padding: '14px 14px 8px',
-                    borderBottom: '1px solid #1A1A45',
-                    fontSize: 9,
-                    letterSpacing: '0.16em',
-                    textTransform: 'uppercase',
-                    color: '#303068',
-                }}>
-                    Residents
-                </div>
-
-                {sidebarChars.map(charId => (
-                    <SidebarCharRow
-                        key={charId}
-                        charId={charId}
-                        save={save}
-                        mapPresence={mapPresence}
-                        curLocId={curLocId}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-}
+                <div style=

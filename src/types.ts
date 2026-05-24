@@ -463,9 +463,7 @@ export interface LocationDefinition {
     defaultOccupants: CharacterId[];
     /** If set, location is hidden until condition is met. */
     unlockCondition?: SceneUnlockCondition;
-    /** Background shown in the chat scene panel (left column) when player is in this room. */
-    chatImageUrl?: string;
-    /** Thumbnail shown on the map room card for this location. */
+    /** Background image URL — used for both the chat view and map room card. */
     mapImageUrl?: string;
     /** Hint for dynamic image generation if static image not available. */
     imagePrompt?: string;

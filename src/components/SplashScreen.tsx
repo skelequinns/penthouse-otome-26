@@ -95,7 +95,7 @@ export function SplashScreen({ onProceed }: SplashScreenProps) {
                     <div style={{
                         position: 'absolute',
                         inset: 0,
-                        backgroundImage: 'url(/images/backgrounds/intro-alley.png)',
+                        backgroundImage: 'url(https://i.imgur.com/AWTmCaz.jpeg)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }} />
@@ -148,7 +148,7 @@ export function SplashScreen({ onProceed }: SplashScreenProps) {
                     <div style={{
                         position: 'absolute',
                         inset: 0,
-                        backgroundImage: 'url(/images/backgrounds/penthouse-formalReceivingMap-evening.png)',
+                        backgroundImage: 'url(https://i.imgur.com/Hiw1E4A.jpeg)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }} />
@@ -175,7 +175,7 @@ export function SplashScreen({ onProceed }: SplashScreenProps) {
                     }}>
                         {/* Luca — left, behind (z 1) */}
                         <img
-                            src="/images/characters/Luca-fullBody.png"
+                            src="https://i.imgur.com/fg9ltKB.png"
                             alt="Luca"
                             style={{
                                 position: 'absolute',
@@ -188,7 +188,7 @@ export function SplashScreen({ onProceed }: SplashScreenProps) {
                         />
                         {/* Adrian — center, front (z 3) */}
                         <img
-                            src="/images/characters/adrian-fullBodyTxBg.png"
+                            src="https://i.imgur.com/IOu0wqH.png"
                             alt="Adrian"
                             style={{
                                 position: 'absolute',
@@ -201,7 +201,7 @@ export function SplashScreen({ onProceed }: SplashScreenProps) {
                         />
                         {/* Sebastian — right, middle (z 2) */}
                         <img
-                            src="/images/characters/Sebastian-fullBody.png"
+                            src="https://i.imgur.com/MiZKkp0.png"
                             alt="Sebastian"
                             style={{
                                 position: 'absolute',
@@ -282,13 +282,4 @@ function PanelFooter({ onAdvance }: { onAdvance: () => void }) {
                     (e.currentTarget as HTMLButtonElement).style.color = COLORS.bgPrimary;
                 }}
                 onMouseLeave={e => {
-                    (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-                    (e.currentTarget as HTMLButtonElement).style.color = COLORS.accent;
-                }}
-            >
-                <span aria-hidden>&#9829;</span>
-                <span aria-hidden style={{ fontSize: 17 }}>&#8250;</span>
-            </button>
-        </div>
-    );
-}
+                    (e.currentTarget as HTMLButtonElement).styl

@@ -131,40 +131,40 @@ interface CharacterImages {
 
 const CHARACTER_IMAGES: Partial<Record<CharacterId, CharacterImages>> = {
     adrian: {
-        portrait:       '/images/characters/adrian-portrait.png',
-        fullbody:       '/images/characters/adrian-fullBodyTxBg.png',
+        portrait:       'https://i.imgur.com/KLgULRK.png',
+        fullbody:       'https://i.imgur.com/IOu0wqH.png',
         halfbody:       null,
         frameHeightPct: 100,
     },
     sebastian: {
-        portrait:       '/images/characters/sebastian-portrait.PNG',
-        fullbody:       '/images/characters/Sebastian-fullBody.png',
+        portrait:       'https://i.imgur.com/VcVMDNQ.png',
+        fullbody:       'https://i.imgur.com/MiZKkp0.png',
         halfbody:       null,
         frameHeightPct: 93,
     },
     kethros: {
         // Both portrait and fullbody are his humanoid form — Kethros is choosing
         // to be visible in this configuration. Swap to catVariant portrait if needed.
-        portrait:       '/images/characters/kethros-portraitHumanoidVariant.PNG',
-        fullbody:       '/images/characters/kethros-fullBodyHumanoidVariant.PNG',
+        portrait:       'https://i.imgur.com/ICC595Q.png',
+        fullbody:       'https://i.imgur.com/8eh15xJ.png',
         halfbody:       null,
         frameHeightPct: 100,
     },
     luca: {
-        portrait:       '/images/characters/Luca-portrait.png',
-        fullbody:       '/images/characters/Luca-fullBody.png',
+        portrait:       'https://i.imgur.com/jHh4bCj.jpeg',
+        fullbody:       'https://i.imgur.com/fg9ltKB.png',
         halfbody:       null,
         frameHeightPct: 91,
     },
     callum: {
-        portrait:       '/images/characters/Callum-portrait.PNG',
-        fullbody:       '/images/characters/Callum-fullBody.png',
+        portrait:       'https://i.imgur.com/Akvy0Tw.jpeg',
+        fullbody:       'https://i.imgur.com/5r49Y1Y.png',
         halfbody:       null,
         frameHeightPct: 90,
     },
     lilith: {
-        portrait:       '/images/characters/lilith-portrait.PNG',
-        fullbody:       '/images/characters/Lilith-fullBody.png',
+        portrait:       'https://i.imgur.com/6P3sPAv.png',
+        fullbody:       'https://i.imgur.com/cfCtLK3.png',
         halfbody:       null,
         frameHeightPct: 75,
     },
@@ -179,8 +179,8 @@ export interface NpcImages {
 
 export const NPC_IMAGES: Record<string, NpcImages> = {
     umbri: {
-        portrait:       '/images/characters/umbri-portrait.png',
-        fullbody:       '/images/characters/umbri-fullBodytx.png',
+        portrait:       'https://i.imgur.com/qrnDvtB.png',
+        fullbody:       'https://i.imgur.com/sP8eCWY.png',
         frameHeightPct: 70,
     },
 };
@@ -924,7 +924,7 @@ export function ChatView({
                     Right edge tracks the right panel: fixed 200px on tablet, 25% on desktop. */}
                 <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: isTablet ? 200 : '25%', overflow: 'hidden', zIndex: 0 }}>
                     <img
-                        src={LOCATIONS[save.presence.currentLocationId ?? 'formal-receiving']?.mapImageUrl ?? '/images/backgrounds/penthouse-splashMap-night.png'}
+                        src={LOCATIONS[save.presence.currentLocationId ?? 'formal-receiving']?.mapImageUrl ?? 'https://i.imgur.com/XU227fD.jpeg'}
                         alt=""
                         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                     />
@@ -1189,31 +1189,4 @@ export function ChatView({
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
                                     <button
                                         onClick={() => { setConfirmNewGame(false); onNewGame?.(); }}
-                                        style={{ background: 'rgba(102,0,34,0.4)', border: '1px solid #FF3355', color: '#FF3355', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '7px 0', cursor: 'pointer', fontFamily: "'Georgia', serif", borderRadius: 2 }}
-                                    >
-                                        Yes
-                                    </button>
-                                    <button
-                                        onClick={() => setConfirmNewGame(false)}
-                                        style={{ background: 'transparent', border: '1px solid #1E2455', color: COLORS.textMuted, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '7px 0', cursor: 'pointer', fontFamily: "'Georgia', serif", borderRadius: 2 }}
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-            {/* MAP OVERLAY */}
-            {mapOpen && mapPresence && (
-                <MapView
-                    save={save}
-                    mapPresence={mapPresence}
-                    onRoomSelect={handleMapNavigate}
-                    onClose={() => { setMapOpen(false); setMapPresence(null); }}
-                />
-            )}
-        </div>
-    );
-}
+                                        style={{ background: 'rgba(102,0,34,0.4)', border: '1px solid #FF3355', color: '#FF3355', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '7px 0', cursor: 'pointer', fontFamily: "'Georgia', serif", borderRadius

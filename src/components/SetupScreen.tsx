@@ -35,7 +35,7 @@ export function SetupScreen({ userName, userProfile, onBegin }: SetupScreenProps
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                backgroundImage: 'url(/images/backgrounds/penthouse-formalReceivingMap-evening.png)',
+                backgroundImage: 'url(https://i.imgur.com/Hiw1E4A.jpeg)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
             }} />
@@ -235,73 +235,4 @@ export function SetupScreen({ userName, userProfile, onBegin }: SetupScreenProps
                                         {h === 'human' ? 'Human' : 'Halflit'}
                                     </span>
                                 </div>
-                                <span style={{
-                                    fontSize: 12,
-                                    color: active ? COLORS.textSecondary : COLORS.textMuted,
-                                    fontFamily: 'Georgia, serif',
-                                    fontStyle: 'italic',
-                                    paddingLeft: 16,
-                                }}>
-                                    {h === 'human' ? 'mortal' : 'half-ascended'}
-                                </span>
-                            </button>
-                        );
-                    })}
-                </div>
-
-                {/* Heritage note */}
-                <p style={{
-                    fontSize: 13,
-                    color: COLORS.textSecondary,
-                    fontStyle: 'italic',
-                    fontFamily: 'Georgia, serif',
-                    margin: '0 0 32px',
-                    lineHeight: 1.6,
-                    paddingLeft: 2,
-                }}>
-                    Half-ascended heritage impacts how characters react to you. Cannot be changed.
-                </p>
-
-                {/* Begin button */}
-                <button
-                    onClick={() => onBegin(heritage)}
-                    style={{
-                        width: '100%',
-                        backgroundImage: bg('transparent'),
-                        border: `2px solid ${COLORS.accent}`,
-                        borderRadius: 8,
-                        padding: '16px',
-                        fontFamily: 'Arial, sans-serif',
-                        fontSize: 15,
-                        fontWeight: 500,
-                        color: COLORS.accent,
-                        cursor: 'pointer',
-                        letterSpacing: '0.12em',
-                        textTransform: 'uppercase',
-                        transition: 'background 0.2s, color 0.2s',
-                    }}
-                    onMouseEnter={e => {
-                        (e.currentTarget as HTMLButtonElement).style.backgroundImage = bg(COLORS.accent);
-                        (e.currentTarget as HTMLButtonElement).style.color = '#0A0F28';
-                    }}
-                    onMouseLeave={e => {
-                        (e.currentTarget as HTMLButtonElement).style.backgroundImage = bg('transparent');
-                        (e.currentTarget as HTMLButtonElement).style.color = COLORS.accent;
-                    }}
-                >
-                    Enter the Penthouse
-                </button>
-
-            </div>
-        </div>
-    );
-}
-
-const labelStyle = {
-    fontFamily: 'Arial, sans-serif',
-    fontSize: 11,
-    letterSpacing: '0.14em',
-    textTransform: 'uppercase' as const,
-    color: COLORS.accent,
-    margin: '0 0 10px',
-};
+              
