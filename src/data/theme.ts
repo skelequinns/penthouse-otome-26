@@ -1,21 +1,27 @@
 /**
  * Hell is a Penthouse in Toronto — Design System
  *
- * Base palette
- * ─────────────────────────────────────────────
- * #0E0509  near-black    — primary background, deepest layer
- * #3B0A1F  deep wine     — secondary background, panels, cards
- * #8B1A4A  merlot        — accent, active states, borders, relationship bars
- * #D4A5B5  dusty rose    — secondary text, labels, soft highlights
- * #F0E4D0  candlelight   — primary text, headings
+ * Base palette — sourced from neon city reference art
+ * ─────────────────────────────────────────────────────
+ * #0A0F28  dark navy      — primary background (rightmost swatch)
+ * #1C2060  cobalt blue    — panels, cards (4th swatch)
+ * #EE00EE  fuchsia        — primary accent (2nd swatch — hot magenta)
+ * #00D4D4  electric cyan  — secondary accent (3rd swatch)
+ * #7B1FA2  deep purple    — tertiary accent (1st swatch)
+ *
+ * Text
+ * #F0F0FF  near-white     — primary text (slight blue tint reads on navy)
+ * #8888C8  muted periwinkle — secondary text / labels
  */
 
 export const PALETTE = {
-    nearBlack:    '#0E0509',
-    deepWine:     '#3B0A1F',
-    merlot:       '#8B1A4A',
-    dustyRose:    '#D4A5B5',
-    candlelight:  '#F0E4D0',
+    darkNavy:      '#0A0F28',
+    cobaltBlue:    '#1C2060',
+    fuchsia:       '#EE00EE',
+    electricCyan:  '#00D4D4',
+    deepPurple:    '#7B1FA2',
+    nearWhite:     '#F0F0FF',
+    periwinkle:    '#8888C8',
 } as const;
 
 /**
@@ -24,69 +30,66 @@ export const PALETTE = {
  */
 export const COLORS = {
     // Backgrounds
-    bgPrimary:      PALETTE.nearBlack,
-    bgPanel:        PALETTE.deepWine,
-    bgCard:         '#2A0716',   // between nearBlack and deepWine — for elevated surfaces
+    bgPrimary:      PALETTE.darkNavy,
+    bgPanel:        '#0F1438',   // between darkNavy and cobaltBlue
+    bgCard:         '#070B1E',   // deeper than darkNavy — for inset surfaces
 
     // Text
-    textPrimary:    PALETTE.candlelight,
-    textSecondary:  PALETTE.dustyRose,
-    textMuted:      '#9A7080',   // dustyRose at reduced opacity equivalent
+    textPrimary:    PALETTE.nearWhite,
+    textSecondary:  PALETTE.periwinkle,
+    textMuted:      '#444470',
 
     // Accents & interactive
-    accent:         PALETTE.merlot,
-    accentHover:    '#A82258',   // merlot lightened for hover state
-    accentSubtle:   '#5C1233',   // merlot darkened for backgrounds behind active elements
+    accent:         PALETTE.fuchsia,
+    accentHover:    '#FF33FF',
+    accentSubtle:   '#300030',
 
     // Borders
-    borderDefault:  '#4A1028',   // between deepWine and merlot
-    borderAccent:   PALETTE.merlot,
+    borderDefault:  '#1E2455',
+    borderAccent:   PALETTE.fuchsia,
 
     // Relationship bar — hostile (–100) through neutral (0) to devoted (+100)
-    // Used as a CSS gradient; negative range uses cool/grey, positive uses warm palette
-    relationshipNegative: '#3A2535',   // muted, cold
-    relationshipNeutral:  '#5C3347',   // mid-tone
-    relationshipPositive: PALETTE.merlot,
-    relationshipDevoted:  '#E8A0B8',   // bright dusty rose for max score
+    relationshipNegative: '#141830',
+    relationshipNeutral:  '#1C2448',
+    relationshipPositive: PALETTE.fuchsia,
+    relationshipDevoted:  '#FF88FF',
 
     // Utility
     white:  '#FFFFFF',
     black:  '#000000',
-    error:  '#8B2020',
-    success: '#2A5C3A',
+    error:  '#FF4444',
+    success: '#00D4D4',
 } as const;
 
 /**
  * Per-character accent colors
  * Applied to character cards, scene headers, relationship bars, and name plates.
- * Each character gets their own color identity within the base palette's range.
- *
- * TODO: Finalize with Rin once character portraits are generated —
- * colors may need adjustment to complement portrait tones.
+ * Each color is drawn from the cyberpunk neon palette — cyan → blue → purple → magenta.
+ * Sebastian is the deliberate outlier: amber against a cool field reads as danger.
  */
 export const CHARACTER_COLORS: Record<string, { accent: string; font: string }> = {
     adrian: {
-        accent: '#1A1214',   // near-black with a warm undertone — sovereignty, depth
+        accent: '#6655CC',   // deep periwinkle-violet — cold sovereignty, controlled depth
         font:   "'Cormorant Garamond', 'Garamond', serif",
     },
     sebastian: {
-        accent: '#7A4A1A',   // deep amber-gold — desire, warmth that reads as danger
+        accent: '#F5A623',   // amber-gold — the only warm note; desire as threat
         font:   "'Playfair Display', 'Georgia', serif",
     },
     kethros: {
-        accent: '#1A3A2A',   // deep forest — ancient, pre-everything, not infernal
+        accent: '#00D4D4',   // electric cyan — ancient, pre-everything, inhuman
         font:   "'IM Fell English', 'Palatino Linotype', serif",
     },
     luca: {
-        accent: '#1A2A1A',   // near-black with green — military, controlled force
+        accent: '#3399FF',   // cobalt blue — military precision, contained force
         font:   "'Libre Baskerville', 'Georgia', serif",
     },
     callum: {
-        accent: '#2A2A3A',   // near-black with silver-blue — precision, accumulation
+        accent: '#4488EE',   // clear blue — data, accumulation, watching
         font:   "'Source Serif Pro', 'Georgia', serif",
     },
     lilith: {
-        accent: '#3A1A2A',   // deep rose-black — beautiful, wrong at the seams
+        accent: '#DD44FF',   // electric violet-magenta — beautiful and wrong
         font:   "'Cormorant', 'Garamond', serif",
     },
 } as const;

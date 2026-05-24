@@ -1,8 +1,8 @@
 project_name: "Hell is a Penthouse in Toronto"
 tagline: "A contemporary dark romance. Six impossible beings. One penthouse. No exit."
 
-# Keep unlisted during development; switch to PUBLIC when ready to share
-visibility: 'UNLISTED'
+# PRIVATE during staging — switch to PUBLIC only when ready for release.
+visibility: 'PRIVATE'
 
 # FULLSCREEN: the stage takes over the entire viewport below the header.
 # The chat input is hidden — all interaction happens through the stage UI.

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hell is a Penthouse — UI Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --near-black:  #0E0509;
+    --deep-wine:   #3B0A1F;
+    --card:        #2A0716;
+    --merlot:      #8B1A4A;
+    --merlot-h:    #A82258;
+    --dusty-rose:  #D4A5B5;
+    --candlelight: #F0E4D0;
+    --border:      #4A1028;
+    --muted:       #9A7080;
+    --subtle:      #5C3347;
+  }
+
+  /* Per-character display colors (readable on dark bg) */
+  :root {
+    --c-adrian:   #CF6E8E;
+    --c-sebastian:#C49450;
+    --c-kethros:  #5A9A6A;
+    --c-luca:     #6A8A6A;
+    --c-callum:   #8A8ABE;
+    --c-lilith:   #BA7A9A;
+  }
+
+  html, body { height: 100%; background: var(--near-black); font-family: 'Georgia', serif; color: var(--candlelight); overflow: hidden; }
+
+  #app { display: flex; flex-direction: column; height: 100vh; }
+
+  /* TOP BAR */
+  #topbar {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 18px;
+    background: rgba(14,5,9,0.97);
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+  }
+  #topbar .location { font-size: 11px; letter-spacing: 0.12em; color: var(--dusty-rose); text-transform: uppercase; }
+  #topbar .time { font-size: 11px; letter-spacing: 0.08em; color: var(--merlot); }
+  #topbar .map-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); font-size: 11px; padding: 4px 14px; cursor: pointer; letter-spacing: 0.08em; font-family: 'Georgia', serif; }
+  #topbar .map-btn:hover { border-color: var(--merlot); color: var(--dusty-rose); }
+
+  /* MAIN */
+  #main { flex: 1; display: flex; min-height: 0; }
+
+  /* PORTRAIT COLUMN */
+  #portrait-col {
+    flex-shrink: 0;
+    width: 300px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('images/backgrounds/penthouse-cityview.png');
+    background-size: cover;
+    background-position: center top;
+  }
+
+  #bg-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(14,5,9,0.1) 50%, rgba(14,5,9,0.97) 100%);
+  }
+
+  /* PRESENCE STRIP */
+  #presence-strip {
+    position: relative;
+    z-index: 5;
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px;
+    background: rgba(14,5,9,0.75);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+  }
+
+  .p-thumb {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    transition: border-color 0.2s, transform 0.15s;
+    background: var(--card);
+  }
+
+  .p-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .p-thumb .p-initials {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+
+  .p-thumb:hover { transform: scale(1.08); }
+  .p-thumb.active { border-color: var(--merlot); }
+  .p-thumb.active::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--merlot);
+    opacity: 0.5;
+  }
+
+  /* speaking pulse on the active thumb */
+  .p-thumb.speaking {
+    border-color: var(--merlot);
+    animation: speakpulse 1.5s ease-in-out infinite;
+  }
+  @keyframes speakpulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(139,26,74,0.5); }
+    50%       { box-shadow: 0 0 0 5px rgba(139,26,74,0); }
+  }
+
+  /* SPRITE AREA */
+  #sprite-area {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  #sprite {
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    transition: opacity 0.3s;
+  }
+
+  #sprite.halfbody { height: 60%; }
+  #sprite.horror   { height: 90%; object-position: center center; }
+
+  /* CHAT COLUMN */
+  #chat-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: rgba(14,5,9,0.93);
+    border-left: 1px solid var(--border);
+  }
+
+  #log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  #log::-webkit-scrollbar { width: 3px; }
+  #log::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* MESSAGES */
+  .msg { display: flex; flex-direction: column; max-width: 90%; }
+  .msg.char  { align-self: flex-start; }
+  .msg.user  { align-self: flex-end; }
+  .msg.narr  { align-self: flex-start; max-width: 100%; }
+
+  .msg-name {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    padding-left: 2px;
+  }
+
+  .msg-body {
+    padding: 9px 13px;
+    font-size: 13px;
+    line-height: 1.72;
+    color: var(--candlelight);
+  }
+
+  .msg.char .msg-body {
+    background: var(--deep-wine);
+    border: 1px solid var(--border);
+    border-left-width: 2px;
+    border-radius: 0 4px 4px 0;
+    font-style: italic;
+  }
+
+  .msg.user .msg-body {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px 0 0 4px;
+    color: var(--dusty-rose);
+    text-align: right;
+    font-style: normal;
+  }
+
+  .msg.narr .msg-body {
+    background: transparent;
+    border: none;
+    border-left: 2px solid var(--subtle);
+    border-radius: 0;
+    color: var(--muted);
+    font-size: 12px;
+    font-style: italic;
+    padding: 5px 12px;
+  }
+
+  /* scene separator */
+  .scene-sep {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--subtle);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 4px 0;
+  }
+  .scene-sep::before, .scene-sep::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* INPUT */
+  #input-row {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 12px;
+    background: rgba(14,5,9,0.98);
+    border-top: 1px solid var(--border);
+    gap: 0;
+  }
+
+  #input-row textarea {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-right: none;
+    color: var(--candlelight);
+    font-family: 'Georgia', serif;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 8px 12px;
+    resize: none;
+    outline: none;
+    min-height: 40px;
+    max-height: 120px;
+    border-radius: 3px 0 0 3px;
+    transition: border-color 0.2s;
+  }
+  #input-row textarea::placeholder { color: var(--subtle); }
+  #input-row textarea:focus { border-color: var(--merlot); }
+
+  #send-btn {
+    background: var(--merlot);
+    border: 1px solid var(--merlot);
+    color: var(--candlelight);
+    font-family: 'Georgia', serif;
+    font-size: 12px;
+    padding: 0 18px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    align-self: stretch;
+    border-radius: 0 3px 3px 0;
+    transition: background 0.2s;
+  }
+  #send-btn:hover { background: var(--merlot-h); }
+
+  /* SCENE SWITCHER */
+  #switcher {
+    position: fixed;
+    bottom: 70px;
+    right: 14px;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: rgba(14,5,9,0.92);
+    border: 1px solid var(--border);
+    padding: 10px;
+    backdrop-filter: blur(4px);
+    min-width: 190px;
+  }
+  #switcher .sw-label { font-size: 9px; letter-spacing: 0.12em; color: var(--subtle); text-transform: uppercase; margin-bottom: 2px; }
+  #switcher button { background: transparent; border: 1px solid var(--border); color: var(--muted); font-size: 11px; padding: 5px 12px; cursor: pointer; font-family: 'Georgia', serif; letter-spacing: 0.04em; text-align: left; white-space: nowrap; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+  #switcher button:hover, #switcher button.active { border-color: var(--merlot); color: var(--dusty-rose); background: rgba(139,26,74,0.15); }
+  #switcher button.active { color: var(--candlelight); background: rgba(139,26,74,0.25); }
+  #switcher hr { border: none; border-top: 1px solid var(--border); margin: 3px 0; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div id="topbar">
+    <span class="location" id="location-label">Dining Room</span>
+    <button class="map-btn">Map</button>
+    <span class="time" id="time-label">Day 1 · Evening</span>
+  </div>
+
+  <div id="main">
+
+    <!-- PORTRAIT COLUMN -->
+    <div id="portrait-col">
+      <div id="bg"></div>
+      <div id="bg-fade"></div>
+
+      <div id="presence-strip">
+        <!-- populated by JS -->
+      </div>
+
+      <div id="sprite-area">
+        <img id="sprite" src="" alt="" style="opacity:0;" />
+      </div>
+    </div>
+
+    <!-- CHAT COLUMN -->
+    <div id="chat-col">
+      <div id="log">
+        <!-- populated by JS -->
+      </div>
+      <div id="input-row">
+        <textarea id="user-input" placeholder="Say something..." rows="1" oninput="autoResize(this)"></textarea>
+        <button id="send-btn" onclick="sendMessage()">Send ▶</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCENE SWITCHER -->
+<div id="switcher">
+  <div class="sw-label">Scene</div>
+  <button class="active" onclick="loadScene('dinner', this)">Dinner — group scene</button>
+  <hr />
+  <button onclick="loadScene('adrian-solo', this)">Adrian — one on one</button>
+  <button onclick="loadScene('sebastian-solo', this)">Sebastian — one on one</button>
+  <button onclick="loadScene('kethros-solo', this)">Kethros — lower gardens</button>
+  <button onclick="loadScene('lilith-solo', this)">Lilith — night realm</button>
+</div>
+
+<script>
+/* ── Character definitions ── */
+const CHARS = {
+  adrian: {
+    name: 'Adrian', title: 'Malivorn · Sovereign',
+    color: '#CF6E8E',
+    portrait: 'images/characters/adrian-portrait.PNG',
+    fullbody: 'images/characters/adrian-fullBodyAtWindow.png',
+    halfbody: 'images/characters/adrian-halfBodyNeutral.png',
+    spriteClass: '',
+  },
+  sebastian: {
+    name: 'Sebastian', title: 'Vareth · Desire',
+    color: '#C49450',
+    portrait: 'images/characters/sebastian-portrait.PNG',
+    fullbody: 'images/characters/Sebastian-fullBodyAtWindow.png',
+    halfbody: 'images/characters/sebastian-halfBodySmirk.png',
+    spriteClass: '',
+  },
+  kethros: {
+    name: 'Kethros', title: 'Pre-infernal · Cosmic',
+    color: '#5A9A6A',
+    portrait: 'images/characters/kethros-portraitHumanoidVariant.PNG',
+    fullbody: 'images/characters/kethros-fullBody.PNG',
+    halfbody: null,
+    spriteClass: 'horror',
+  },
+  luca: {
+    name: 'Luca', title: 'Dracen · Command',
+    color: '#6A8A6A',
+    portrait: null,
+    fullbody: null,
+    halfbody: null,
+    spriteClass: '',
+  },
+  callum: {
+    name: 'Callum', title: 'Solen · Accumulation',
+    color: '#8A8ABE',
+    portrait: null,
+    fullbody: null,
+    halfbody: null,
+    spriteClass: '',
+  },
+  lilith: {
+    name: 'Lilith', title: 'Nahar · Night Realm',
+    color: '#BA7A9A',
+    portrait: 'images/characters/lilith-portrait.PNG',
+    fullbody: 'images/characters/lilith-fullBodyNightRealm.PNG',
+    halfbody: null,
+    spriteClass: '',
+  },
+};
+
+/* ── Scene definitions ── */
+const SCENES = {
+  'dinner': {
+    location: 'Dining Room',
+    time: 'Day 1 · Evening',
+    present: ['adrian','sebastian','luca','callum','lilith'],
+    featured: 'adrian',
+    useHalfbody: false,
+    messages: [
+      { type: 'narr', text: 'The table seats eight. Six chairs occupied. The seating arrangement was not random and everyone at the table knows it.' },
+      { type: 'char', char: 'adrian', text: '"Tomorrow\'s schedule will run the same as today\'s. The household doesn\'t adjust to disruption."' },
+      { type: 'char', char: 'sebastian', text: '"She\'s been here one day, Malivorn." He reaches for his glass without looking up. "Give it a week before you start talking about disruption."' },
+      { type: 'char', char: 'luca', text: '"The Astori dispatch came in before dinner. We\'ll need two hours after."' },
+      { type: 'char', char: 'callum', text: '"I\'ve already reviewed it." He turns a page. "There\'s nothing urgent."' },
+      { type: 'user', text: 'I reach for the bread. My hand is completely steady. I\'m proud of that.' },
+      { type: 'char', char: 'lilith', text: '"It\'s good bread." She\'s watching me. She\'s been watching me since I sat down. "You should eat something."' },
+      { type: 'char', char: 'adrian', text: 'He doesn\'t look at her. He doesn\'t look at anyone. "Lilith."' },
+      { type: 'char', char: 'lilith', text: '"Mm." She looks away.' },
+    ],
+  },
+  'adrian-solo': {
+    location: 'Formal Receiving Room',
+    time: 'Day 1 · Morning',
+    present: ['adrian'],
+    featured: 'adrian',
+    useHalfbody: true,
+    messages: [
+      { type: 'narr', text: 'Two adjoining rooms. High ceilings. Nothing decorative that wasn\'t chosen with intent.' },
+      { type: 'char', char: 'adrian', text: '"You\'ll find the schedule posted on your door each morning. You are expected at dinner. Whether you choose to interpret the rest as freedom or confinement is largely a question of temperament."' },
+      { type: 'user', text: '"And if I don\'t go to dinner?"' },
+      { type: 'char', char: 'adrian', text: '"Then we\'ll have a conversation about expectations." He doesn\'t look away from the window. "You won\'t enjoy it."' },
+    ],
+  },
+  'sebastian-solo': {
+    location: 'Receiving Room',
+    time: 'Day 2 · Afternoon',
+    present: ['sebastian'],
+    featured: 'sebastian',
+    useHalfbody: true,
+    messages: [
+      { type: 'char', char: 'sebastian', text: '"You\'re doing that thing where you try to figure out the angle before you say anything." He sounds amused. "There isn\'t one. I\'m just here."' },
+      { type: 'user', text: '"Everyone here has an angle."' },
+      { type: 'char', char: 'sebastian', text: '"Sure." He tilts his head. "But I\'m the only one who\'s going to tell you that to your face. Doesn\'t that make me the honest one?"' },
+    ],
+  },
+  'kethros-solo': {
+    location: 'Lower Gardens · The Below',
+    time: 'Day 4 · —',
+    present: ['kethros'],
+    featured: 'kethros',
+    useHalfbody: false,
+    messages: [
+      { type: 'narr', text: 'Subterranean. Black-red roses on dark stone, blooming without light. The air is still in a way that suggests it has always been still and always will be.' },
+      { type: 'narr', text: 'Something is already watching when you arrive. You understand this the way you understand that you are breathing — only because you noticed.' },
+      { type: 'user', text: 'I don\'t move. I\'m not sure moving is the right choice.' },
+      { type: 'narr', text: 'The watching doesn\'t change. It doesn\'t approach. It is simply present in the way that very old things are present — without urgency, without any particular investment in time.' },
+    ],
+  },
+  'lilith-solo': {
+    location: 'Night Realm',
+    time: '— · —',
+    present: ['lilith'],
+    featured: 'lilith',
+    useHalfbody: false,
+    messages: [
+      { type: 'narr', text: 'The mirror on the office wall opened. You don\'t remember walking through it.' },
+      { type: 'char', char: 'lilith', text: '"You found your way here." She doesn\'t look surprised. She never looks surprised. "That\'s not nothing."' },
+      { type: 'user', text: '"Where is here?"' },
+      { type: 'char', char: 'lilith', text: '"Mine." She looks at the horizon, which doesn\'t behave the way horizons should. "Don\'t worry about the geometry. It adjusts."' },
+    ],
+  },
+};
+
+let currentScene = null;
+let featuredChar = null;
+
+function loadScene(sceneId, btn) {
+  const scene = SCENES[sceneId];
+  if (!scene) return;
+  currentScene = scene;
+
+  document.getElementById('location-label').textContent = scene.location;
+  document.getElementById('time-label').textContent = scene.time;
+
+  buildPresenceStrip(scene.present, scene.featured);
+  setFeatured(scene.featured, scene.useHalfbody);
+  buildLog(scene.messages);
+
+  document.querySelectorAll('#switcher button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function buildPresenceStrip(present, active) {
+  const strip = document.getElementById('presence-strip');
+  strip.innerHTML = '';
+  present.forEach(charId => {
+    const c = CHARS[charId];
+    const thumb = document.createElement('div');
+    thumb.className = 'p-thumb' + (charId === active ? ' active speaking' : '');
+    thumb.title = c.name;
+    thumb.onclick = () => {
+      setFeatured(charId, currentScene ? currentScene.useHalfbody : false);
+      document.querySelectorAll('.p-thumb').forEach(t => { t.classList.remove('active','speaking'); });
+      thumb.classList.add('active','speaking');
+    };
+    thumb.style.borderColor = charId === active ? c.color : '';
+
+    if (c.portrait) {
+      const img = document.createElement('img');
+      img.src = c.portrait;
+      img.alt = c.name;
+      thumb.appendChild(img);
+    } else {
+      const ini = document.createElement('div');
+      ini.className = 'p-initials';
+      ini.style.color = c.color;
+      ini.textContent = c.name.slice(0,2).toUpperCase();
+      thumb.appendChild(ini);
+    }
+    strip.appendChild(thumb);
+  });
+}
+
+function setFeatured(charId, useHalfbody) {
+  featuredChar = charId;
+  const c = CHARS[charId];
+  const sprite = document.getElementById('sprite');
+
+  const src = useHalfbody && c.halfbody ? c.halfbody : (c.fullbody || '');
+  if (src) {
+    sprite.style.opacity = '0';
+    setTimeout(() => {
+      sprite.src = src;
+      sprite.className = c.spriteClass;
+      sprite.style.opacity = '1';
+    }, 200);
+  } else {
+    sprite.style.opacity = '0';
+  }
+
+  // update strip active state
+  document.querySelectorAll('.p-thumb').forEach((t, i) => {
+    const id = currentScene ? currentScene.present[i] : null;
+    if (id === charId) {
+      t.classList.add('active');
+      t.style.borderColor = c.color;
+    } else {
+      t.classList.remove('active');
+      t.style.borderColor = '';
+    }
+  });
+}
+
+function buildLog(messages) {
+  const log = document.getElementById('log');
+  log.innerHTML = '';
+  messages.forEach(m => appendMsg(m, false));
+  log.scrollTop = log.scrollHeight;
+}
+
+function appendMsg(m, scroll=true) {
+  const log = document.getElementById('log');
+  const el = document.createElement('div');
+
+  if (m.type === 'narr') {
+    el.className = 'msg narr';
+    el.innerHTML = '<div class="msg-body">' + escHtml(m.text) + '</div>';
+  } else if (m.type === 'char') {
+    const c = CHARS[m.char];
+    el.className = 'msg char';
+    const nameEl = document.createElement('div');
+    nameEl.className = 'msg-name';
+    nameEl.style.color = c.color;
+    nameEl.textContent = c.name;
+    const bodyEl = document.createElement('div');
+    bodyEl.className = 'msg-body';
+    bodyEl.style.borderLeftColor = c.color;
+    bodyEl.textContent = m.text;
+    el.appendChild(nameEl);
+    el.appendChild(bodyEl);
+
+    // pulse that character's thumb
+    el.addEventListener('mouseenter', () => {
+      document.querySelectorAll('.p-thumb').forEach((t, i) => {
+        const id = currentScene ? currentScene.present[i] : null;
+        if (id === m.char) t.classList.add('speaking');
+        else t.classList.remove('speaking');
+      });
+    });
+    el.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.p-thumb').forEach(t => t.classList.remove('speaking'));
+    });
+
+  } else if (m.type === 'user') {
+    el.className = 'msg user';
+    el.innerHTML = '<div class="msg-body">' + escHtml(m.text) + '</div>';
+  }
+
+  log.appendChild(el);
+  if (scroll) log.scrollTop = log.scrollHeight;
+}
+
+function sendMessage() {
+  const ta = document.getElementById('user-input');
+  const text = ta.value.trim();
+  if (!text) return;
+  appendMsg({ type: 'user', text });
+  ta.value = '';
+  ta.style.height = 'auto';
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+document.getElementById('user-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+loadScene('dinner', document.querySelector('#switcher button'));
+</script>
+</body>
+</html>

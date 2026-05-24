@@ -19,7 +19,7 @@ export type CharacterId =
     | 'lilith';
 
 export const ALL_CHARACTER_IDS: CharacterId[] = [
-    'adrian', 'sebastian', 'kethros', 'luca', 'callum', 'lilith',
+    'adrian', 'sebastian', 'luca', 'callum', 'lilith', 'kethros',
 ];
 
 /** Attendants and non-LI named characters. */
@@ -28,9 +28,16 @@ export type NpcId =
     | 'raura'
     | 'kostas'
     | 'damon'
-    | 'zaros';
+    | 'zaros'
+    | 'cassara'
+    | 'lyra'
+    | 'yulis'
+    | 'karn';
 
-export const ALL_NPC_IDS: NpcId[] = ['umbri', 'raura', 'kostas', 'damon', 'zaros'];
+export const ALL_NPC_IDS: NpcId[] = [
+    'umbri', 'raura', 'kostas', 'damon', 'zaros',
+    'cassara', 'lyra', 'yulis', 'karn',
+];
 
 /**
  * Power tier — determines stat ceilings and conflict resolution weight.
@@ -54,10 +61,10 @@ export const TIER_STAT_MAX: Record<CharacterTier, number> = {
 /** All navigable locations in the penthouse and the Below. */
 export type LocationId =
     // ── Penthouse — Lower Floor (Common) ────────────────────────────────────
+    | 'formal-receiving'        // Entry room; Umbri greets {{user}} here on arrival
     | 'dining-room'             // Nightly dinner; household politics play out here
     | 'library'                 // Callum's domain; freely accessible to {{user}}
     | 'war-room'                // Luca's domain; daily dispatches — off limits
-    | 'receiving-room'          // Formal arrivals; Adrian's default territory
     // ── Penthouse — Upper Floor (Private Quarters) ───────────────────────────
     | 'user-room'               // {{user}}'s room; Umbri present
     | 'adrian-quarters'         // Unlocks with relationship progress; portal inside
@@ -244,24 +251,39 @@ export function clampScore(score: number): number {
 export interface RelationshipData {
     /** –100 to +100. Never stored outside this range. */
     score: number;
+    /**
+     * True once {{user}} has shared a room with this character and they have spoken.
+     * Controls whether the character's name, portrait, and score are revealed in the UI.
+     * All characters start hidden; Kethros requires additional flag gating.
+     */
+    met: boolean;
     /** IDs of scenes completed with this character. */
     completedScenes: string[];
     /**
      * Evolving: genuine joy this character has found in {{user}}'s presence.
      * Distinct from affinity score — tracks something rarer and harder to fake.
+     * Updated only at milestone scene completions, not per-message.
      */
     joy: number;
     /**
      * Evolving: how much this character trusts {{user}}.
      * Also distinct from score — trust can be high while affinity is complicated.
+     * Updated only at milestone scene completions, not per-message.
      */
     trust: number;
+    /**
+     * The score delta from the most recent message exchange.
+     * Used by the UI to display a transient +/– indicator beside the character portrait.
+     * Not meaningful outside of the current session; treated as display state only.
+     */
+    lastDelta?: number;
 }
 
 /** Starting relationship state for a single LI character. */
 export function defaultRelationshipData(id: CharacterId): RelationshipData {
     return {
         score: 0,
+        met: false,
         completedScenes: [],
         joy:   CHARACTER_STARTING_JOY[id],
         trust: CHARACTER_STARTING_TRUST[id],
@@ -368,6 +390,12 @@ export interface ActiveSceneData {
     messageCount: number;
     /** True once [SCENE END] tag detected or player manually ends. */
     complete: boolean;
+    /**
+     * Character(s) participating in this scene.
+     * Used by beforePrompt to scope SENTIMENT rubric injection.
+     * When undefined, beforePrompt falls back to all non-Kethros characters.
+     */
+    characterIds?: CharacterId[];
 }
 
 
@@ -435,8 +463,10 @@ export interface LocationDefinition {
     defaultOccupants: CharacterId[];
     /** If set, location is hidden until condition is met. */
     unlockCondition?: SceneUnlockCondition;
-    /** Static background image URL. Provided by Rin. */
-    imageUrl?: string;
+    /** Background shown in the chat scene panel (left column) when player is in this room. */
+    chatImageUrl?: string;
+    /** Thumbnail shown on the map room card for this location. */
+    mapImageUrl?: string;
     /** Hint for dynamic image generation if static image not available. */
     imagePrompt?: string;
     /** True for Below-realm locations. Requires portal access. */
@@ -464,6 +494,55 @@ export interface TimelineEntry {
     locationId: LocationId;
     /** Optional LLM-generated one-line summary of what happened. */
     summary?: string;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PRESENCE STATE
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Tracks room navigation state for the presence/RNG system.
+ *
+ * Rules enforced by locationRng.ts:
+ *
+ * Ineligibility — if {{user}} just left a room, characters encountered there
+ * are ineligible to appear via RNG in the *immediately next* room. They can
+ * reappear after one room gap. This prevents the instant-teleport effect.
+ *
+ * travelingWithUser — set when a character suggests leaving together AND
+ * {{user}} accepts. That character appears in the next room regardless of
+ * RNG weight; they are NOT subject to ineligibility. Cleared once the new
+ * room scene begins.
+ *
+ * How travelingWithUser gets set:
+ *   afterResponse detects a [TRAVEL_WITH:characterId] tag in the LLM output.
+ *   The UI presents a confirmation beat; on acceptance, this field is written.
+ *   See Stage.tsx afterResponse for tag parsing.
+ */
+export interface PresenceState {
+    /** Where {{user}} currently is. Null before intro completes. */
+    currentLocationId: LocationId | null;
+    /**
+     * Characters present in the PREVIOUS room.
+     * Ineligible for RNG in the immediate next room navigated to.
+     * Reset on the room after that (one-room cooldown only).
+     */
+    lastRoomCharacters: CharacterId[];
+    /**
+     * Character traveling with {{user}} between rooms.
+     * Set by [TRAVEL_WITH:characterId] tag. Cleared after new room resolves.
+     * This character is authored-present in the next room regardless of weights.
+     */
+    travelingWithUser: CharacterId | null;
+}
+
+export function defaultPresenceState(): PresenceState {
+    return {
+        currentLocationId: null,
+        lastRoomCharacters: [],
+        travelingWithUser: null,
+    };
 }
 
 
@@ -498,8 +577,11 @@ export interface SaveType {
     availableScenes: string[];
     activeScene?: ActiveSceneData;
 
-    // Story flags — arbitrary key/value pairs for tracking world state
+    // Story flags -- arbitrary key/value pairs for tracking world state
     flags: Record<string, any>;
+
+    // Presence -- room navigation and character RNG state
+    presence: PresenceState;
 
     // History
     timeline: TimelineEntry[];
@@ -530,6 +612,11 @@ export function createNewSave(
         availableScenes: ['opening'],
         activeScene: undefined,
         flags: {},
+        presence: {
+            ...defaultPresenceState(),
+            // The game opens in the formal receiving room — Umbri greets {{user}} here on arrival.
+            currentLocationId: 'formal-receiving',
+        },
         timeline: [],
         lastSaved: Date.now(),
     };
@@ -540,18 +627,29 @@ export function createNewSave(
 // CHUB STAGE STATE TYPES
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Per-message state — tracks the active scene across chat turns. */
+/**
+ * Per-message state — branch-aware snapshot of volatile game state.
+ *
+ * Chub stores this per-message so when a user retries or branches,
+ * setState() is called with the snapshot from that branch point.
+ * This makes relationship scores, flags, and time all revert correctly
+ * when the player goes back in the conversation.
+ *
+ * Contains the full save so nothing is missed on a branch restore.
+ */
 export type MessageStateType = {
     activeScene?: ActiveSceneData;
+    /** Full save snapshot at the time this message was processed. */
+    save?: SaveType;
 } | null;
 
-/** Chat-level state — the full save, persists regardless of branch switching. */
+/** Chat-level state -- the full save, persists regardless of branch switching. */
 export type ChatStateType = {
-    save?: SaveType;
+    save: SaveType | null;
 };
 
-/** One-time initialization state — nothing needed yet. */
-export type InitStateType = null;
-
-/** User-configurable options — none defined yet. */
+/** Stage config -- no user-facing config for now. */
 export type ConfigType = Record<string, never>;
+
+/** Stage init state -- unused. */
+export type InitStateType = null;

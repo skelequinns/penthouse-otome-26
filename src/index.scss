@@ -5,11 +5,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Ensure that everything is transparent,
-// so that the chat page can be seen through the stage
-* {
+// In the Chub embed (production), make all elements transparent so the
+// underlying chat is visible through the stage overlay.
+// In local dev (.dev-mode set by main.tsx), skip this so bubble backgrounds render.
+html:not(.dev-mode) * {
   background-color: transparent !important;
-  overflow: hidden !important;
+}
+
+// Prevent the root from ever getting outer scrollbars in the Chub embed
+html, body, #root {
+  overflow: hidden;
 }
 
 html, body, #root {

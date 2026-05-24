@@ -37,12 +37,13 @@ import { LocationId, LocationDefinition } from '../types';
 const PENTHOUSE_COMMON: LocationDefinition[] = [
 
     {
-        id: 'receiving-room',
+        id: 'formal-receiving',
         name: 'Formal Receiving Room',
-        description: `Two adjoining rooms designed to Malivorn's specification, which is to say: dark materials, high ceilings, and nothing decorative that wasn't chosen with intent. Power is communicated here without being announced. The architecture does the work. The kind of space that makes people behave better than they intended to, purely from environmental pressure.`,
-        defaultOccupants: ['adrian'],
-        imageUrl: '',
-        imagePrompt: 'Dark formal reception room, high ceilings, deep mahogany and obsidian tones, Toronto penthouse, luxury and severity, no natural light',
+        description: `The first interior space after the elevator — where guests are received, where expectations are set. It is a room designed to be looked at before it is lived in. The furniture is precise, the proportions considered; the view through the tall windows reminds a visitor exactly how high up they are. Umbri receives {{user}} here on arrival. Everything that follows begins in this room.`,
+        defaultOccupants: [],
+        chatImageUrl: '/images/backgrounds/penthouse-formalReceivingChat-evening.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-formalReceivingMap-evening.png',
+        imagePrompt: 'Penthouse formal receiving room, elegant entry space, tall windows, Toronto high-rise evening light, understated luxury, composed and deliberate',
     },
 
     {
@@ -50,7 +51,8 @@ const PENTHOUSE_COMMON: LocationDefinition[] = [
         name: 'Dining Room',
         description: `Used nightly. The table is long enough that distance is a statement, and seating is never random — who sits where, who is served first, what is said in front of whom. Court dynamics play out here as surely as anywhere in the Below. The dining room is one of the primary stages for household politics, which means it is also one of the primary stages for everything else.`,
         defaultOccupants: [],
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-diningChat-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-diningMap-night.png',
         imagePrompt: 'Penthouse dining room, long dark table, candlelight, formal setting, Toronto high-rise, luxury and tension, understated wealth',
     },
 
@@ -59,7 +61,8 @@ const PENTHOUSE_COMMON: LocationDefinition[] = [
         name: 'Library',
         description: `Floor-to-ceiling shelving, organised by a logic that becomes legible over time if you pay attention. Callum's domain in the way that a collector's museum is their domain — the material is everywhere, the ownership is understood without being stated. One of the few common spaces where {{user}} can move freely without that movement reading as encroachment. The silence here is different from the silence in other rooms.`,
         defaultOccupants: ['callum'],
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-libraryChat-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-libraryMap-night.png',
         imagePrompt: 'Penthouse library, floor-to-ceiling dark shelves, leather and amber tones, intimate reading lamps, Toronto night view through tall windows',
     },
 
@@ -69,7 +72,8 @@ const PENTHOUSE_COMMON: LocationDefinition[] = [
         description: `Active working space. Below dispatches, tactical assessments, earth-side Firstlight business — the actual operational centre of the household. Nothing here is decorative. The screens and surfaces are configured for utility, and the room feels different from the receiving rooms: less performed, more real. {{user}} has been told, clearly, that this room is not for them.`,
         defaultOccupants: ['luca'],
         isOffLimits: true,
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-warroomChat1-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-warroomMap-night.png',
         imagePrompt: 'Penthouse war room, screens and tactical maps, dark and functional, modern military aesthetic, Toronto penthouse, no ornamentation',
     },
 
@@ -87,7 +91,8 @@ const PENTHOUSE_QUARTERS: LocationDefinition[] = [
         name: 'Your Room',
         description: `Not a cell — it's a room in the penthouse, and it shows. The confinement is structural rather than physical: the floor's security, the building's height, the understanding that there is nowhere to go. Umbri is present by default, attending without intruding. What the room tells {{user}} about their situation is mostly in what it doesn't say.`,
         defaultOccupants: [],
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-userBedroomChat-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-userBedroomMap-night.png',
         imagePrompt: 'Penthouse guest room, elegant and understated, dark palette, high floor, Toronto city view at night, quiet and contained',
     },
 
@@ -96,8 +101,8 @@ const PENTHOUSE_QUARTERS: LocationDefinition[] = [
         name: "Adrian's Quarters",
         description: `His territory, in the full sense of the word — the rest of the penthouse communicates his authority, but this room simply is it. Dark and extensive, attended by household staff in the moments he permits it. A permanent portal to the Below occupies one wall, sealed except when he chooses otherwise. Being here, without being invited, is a different category of transgression from most things {{user}} could do.`,
         defaultOccupants: ['adrian'],
-        unlockCondition: { minRelationship: { adrian: 25 } },
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-adrianQuartersChat-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-adrianQuartersMap-night.png',
         imagePrompt: 'Penthouse suite, severe luxury, dark materials, portal aperture on one wall, no softness anywhere, controlled and absolute',
     },
 
@@ -106,8 +111,8 @@ const PENTHOUSE_QUARTERS: LocationDefinition[] = [
         name: "Sebastian's Quarters",
         description: `Warmly lit, deliberately comfortable — the design logic here is the same as Sebastian's entire operational mode: create an environment where guard comes down. It works. The warmth is infrastructure. Kostas and Raura are based here and move through with the practiced ease of people who have long since stopped noticing what they're noticing. The portal is present but unobtrusive. Sebastian's quarters feel like an invitation, which is the point.`,
         defaultOccupants: ['sebastian'],
-        unlockCondition: { minRelationship: { sebastian: 25 } },
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-sebastianQuartersChat-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-sebastianQuartersMap-night.png',
         imagePrompt: 'Penthouse suite, warm amber lighting, comfortable and beautiful, deliberately approachable, velvet and warmth, portal subtle in background',
     },
 
@@ -116,8 +121,8 @@ const PENTHOUSE_QUARTERS: LocationDefinition[] = [
         name: "Callum's Quarters",
         description: `Precision and order — every surface organised by a system that is immediately evident but not immediately legible. The adjacent study is where Zaros works, managing the administrative layer of Callum's operations; the boundary between Callum's personal space and his working space is not entirely clear, which may be intentional. The portal is well-integrated, architecturally. He has had a long time to get it right.`,
         defaultOccupants: ['callum'],
-        unlockCondition: { minRelationship: { callum: 25 } },
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-callumQuartersUI-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-callumQuartersMap-night.png',
         imagePrompt: 'Penthouse suite, precise and ordered, cool tones, scholarly aesthetic, every object deliberate, adjacent study visible through open door',
     },
 
@@ -126,8 +131,8 @@ const PENTHOUSE_QUARTERS: LocationDefinition[] = [
         name: "Luca's Quarters",
         description: `Functional and spare — military in character in a way that isn't affectation, just the expression of someone who has never seen the point in surplus. Damon is usually nearby. The portal is there; the room doesn't dress it up. What the space communicates is efficiency, which is the only aesthetic Luca has ever consistently applied.`,
         defaultOccupants: ['luca'],
-        unlockCondition: { minRelationship: { luca: 25 } },
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-lucaQuartersUI-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-lucaQuartersMap-night.png',
         imagePrompt: 'Penthouse suite, functional and spare, military aesthetic without decoration, cool tones, no excess, portal present and understated',
     },
 
@@ -136,8 +141,8 @@ const PENTHOUSE_QUARTERS: LocationDefinition[] = [
         name: "Lilith's Quarters & Office",
         description: `The personal chambers and the office are technically distinct spaces, but the boundary between them is managed by Lilith and shifts depending on what she needs. The mirror occupies one wall of the office — the entry point to her Night Realm, a personal domain within the Below that operates entirely by her rules. It looks like a mirror. The portal is elsewhere in the suite. Being here without invitation means {{user}} is either trusted completely or has made a very interesting mistake.`,
         defaultOccupants: ['lilith'],
-        unlockCondition: { minRelationship: { lilith: 25 } },
-        imageUrl: '',
+        chatImageUrl: '/images/backgrounds/penthouse-lilithQuartersOfficeUI-night.PNG',
+        mapImageUrl: '/images/backgrounds/penthouse-lilithQuartersOfficeMap-night.png',
         imagePrompt: 'Penthouse suite, beautiful and wrong in the seams, mirror covering one full wall, warm and unsettling, Night Realm portal aesthetic',
     },
 
@@ -297,16 +302,15 @@ const LOWER_GARDENS: LocationDefinition[] = [
         defaultOccupants: ['kethros'],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true } },
-        imageUrl: '',
         imagePrompt: 'Subterranean garden, black-red roses blooming without light on dark stone walls, ancient and still, cold air, pre-dates everything above it, shadowed alcove at far end',
     },
 
 ];
 
 
-// ─────────────────────────────────────────────────────────────────────────────
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 // EXPORTS
-// ─────────────────────────────────────────────────────────────────────────────
+// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 
 /** All location definitions, ordered by floor/section. */
 export const ALL_LOCATIONS: LocationDefinition[] = [
