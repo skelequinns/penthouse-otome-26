@@ -161,7 +161,8 @@ const BELOW_COMMON: LocationDefinition[] = [
         description: `The general approach: corridors of black stone, the suppression that operates on earth lifting away here, the air carrying a weight that is not atmospheric in any conventional sense. The Citadel predates the hierarchy it now houses. Its architecture communicates permanence in the way that only structures built without the concept of endings can. The earth is very far above.`,
         defaultOccupants: [],
         isBelow: true,
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal citadel interior, black stone corridors, vast and ancient, no natural light, deep reds and obsidian, weight and permanence',
     },
 
@@ -172,7 +173,8 @@ const BELOW_COMMON: LocationDefinition[] = [
         defaultOccupants: ['adrian'],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal throne room, vast obsidian hall, elevated throne, deep reds and black, crushing scale, court setting, ancient and absolute',
     },
 
@@ -183,7 +185,8 @@ const BELOW_COMMON: LocationDefinition[] = [
         defaultOccupants: ['callum'],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal library, impossible shelving depth, warm amber against dark stone, small spider-form creatures retrieving books, ancient knowledge, not quite threatening',
     },
 
@@ -194,7 +197,8 @@ const BELOW_COMMON: LocationDefinition[] = [
         defaultOccupants: [],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal dining room, long obsidian table, candlelight from above, formal court setting, deep reds and black, sovereignty and ceremony',
     },
 
@@ -206,7 +210,8 @@ const BELOW_COMMON: LocationDefinition[] = [
         isBelow: true,
         isOffLimits: true,
         unlockCondition: { flags: { 'below_access': true } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal war room, Below military command centre, dark and operational, faction maps, no ornamentation, clearly prohibited',
     },
 
@@ -226,7 +231,8 @@ const BELOW_CHAMBERS: LocationDefinition[] = [
         defaultOccupants: ['adrian'],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true }, minRelationship: { adrian: 25 } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal lord\'s chambers, vast and dark, wings implied in shadow, obsidian and ember tones, full sovereignty present, semi-corporeal attendants',
     },
 
@@ -238,7 +244,8 @@ const BELOW_CHAMBERS: LocationDefinition[] = [
         isBelow: true,
         isOffLimits: true,
         unlockCondition: { flags: { 'below_access': true } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Private infernal office, dark and spare, documents and instruments of power, absolute prohibition implied in the architecture',
     },
 
@@ -249,7 +256,8 @@ const BELOW_CHAMBERS: LocationDefinition[] = [
         defaultOccupants: ['sebastian'],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true }, minRelationship: { sebastian: 25 } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal suite, warmly lit against dark stone, comfortable and beautiful, amber and red, desire aesthetic, the warmth is still deliberate',
     },
 
@@ -260,7 +268,8 @@ const BELOW_CHAMBERS: LocationDefinition[] = [
         defaultOccupants: ['callum'],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true }, minRelationship: { callum: 25 } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal scholar\'s chambers, precise and ordered, dark stone and cool light, documentation and records visible, adjacent office space, no softening',
     },
 
@@ -271,7 +280,8 @@ const BELOW_CHAMBERS: LocationDefinition[] = [
         defaultOccupants: ['luca'],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true }, minRelationship: { luca: 25 } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal military chambers, antechamber and inner room, functional and spare, dark stone, no excess, structured access and clear hierarchy',
     },
 
@@ -282,7 +292,8 @@ const BELOW_CHAMBERS: LocationDefinition[] = [
         defaultOccupants: ['lilith'],
         isBelow: true,
         unlockCondition: { flags: { 'below_access': true }, minRelationship: { lilith: 25 } },
-        imageUrl: '',
+        chatImageUrl: '',
+        mapImageUrl: '',
         imagePrompt: 'Infernal office, warm against dark stone, intelligence and beauty, mirror to Night Realm on one wall, wrong in the seams, not entirely threatening',
     },
 

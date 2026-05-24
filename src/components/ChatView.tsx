@@ -924,7 +924,7 @@ export function ChatView({
                     Right edge tracks the right panel: fixed 200px on tablet, 25% on desktop. */}
                 <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: isTablet ? 200 : '25%', overflow: 'hidden', zIndex: 0 }}>
                     <img
-                        src={LOCATIONS[save.presence.currentLocationId]?.mapImageUrl ?? '/images/backgrounds/penthouse-splashMap-night.png'}
+                        src={LOCATIONS[save.presence.currentLocationId ?? 'formal-receiving']?.mapImageUrl ?? '/images/backgrounds/penthouse-splashMap-night.png'}
                         alt=""
                         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                     />
