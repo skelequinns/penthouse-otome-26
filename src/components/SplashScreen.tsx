@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { CSSProperties, useState } from 'react';
 import { COLORS } from '../data/theme';
 import { useWindowSize, BP } from '../hooks/useWindowSize';
 
@@ -42,7 +42,7 @@ const SLIDE2_PARAGRAPHS: Array<{ text: string; isDialogue?: boolean }[]> = [
 
 // --- Shared styles ---
 
-const PANEL_STYLE = {
+const PANEL_STYLE: CSSProperties = {
     position: 'absolute',
     background: 'rgba(10, 13, 35, 0.80)',
     border: '1px solid rgba(30, 36, 85, 0.75)',
@@ -52,14 +52,14 @@ const PANEL_STYLE = {
     overflow: 'hidden',
 };
 
-const WORDMARK_STYLE = {
+const WORDMARK_STYLE: CSSProperties = {
     position: 'absolute',
     top: 18,
     left: 22,
     fontFamily: 'Arial, sans-serif',
     fontSize: 13,
     letterSpacing: '0.26em',
-    textTransform: 'uppercase' as const,
+    textTransform: 'uppercase',
     color: COLORS.accent,
     zIndex: 20,
     opacity: 1,
