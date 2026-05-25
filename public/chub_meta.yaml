@@ -1,8 +1,8 @@
-project_name: "Hell is a Penthouse in Toronto"
+project_name: "PENTHOUSE OTOME"
 tagline: "A contemporary dark romance. Six impossible beings. One penthouse. No exit."
 
 # PRIVATE during staging — switch to PUBLIC only when ready for release.
-visibility: 'PRIVATE'
+visibility: 'UNLISTED'
 
 # FULLSCREEN: the stage takes over the entire viewport below the header.
 # The chat input is hidden — all interaction happens through the stage UI.
